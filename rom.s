@@ -44,6 +44,10 @@ preboot:
 	jr ra
 	nop
 
+IO	equ 0x1f800000
+GP0	equ 0x1810
+GP1	equ 0x1814
+
 midboot:
 	; remove breakpoint
 	mtc0	$0, $7		; DCIC
@@ -55,7 +59,59 @@ midboot:
 	jal	puts
 	nop
 
-	; todo: put smthn on the screen
+	li	a0, IO
+
+	; reset gpu
+	li	t0, 0x00000000
+	sw	t0, GP1(a0)
+	; display enable
+	li	t0, 0x03000000
+	sw	t0, GP1(a0)
+	; display mode
+	li	t0, 0x08000001
+	sw	t0, GP1(a0)
+	; horizontal range
+	li	t0, 0x06c60260
+	sw	t0, GP1(a0)
+	; vertical range
+	li	t0, 0x07042018
+	sw	t0, GP1(a0)
+	; draw mode
+	li	t0, 0xe1000400
+	sw	t0, GP0(a0)
+	; area top left
+	li	t0, 0xe3000000
+	sw	t0, GP0(a0)
+	; area bottom right
+	li	t0, 0xe403bd3f
+	sw	t0, GP0(a0)
+	; offset
+	li	t0, 0xe5000000
+	sw	t0, GP0(a0)
+
+	; red square
+	li	t0, 0x600000ff
+	sw	t0, GP0(a0)
+	li	t0, 0x00080020
+	sw	t0, GP0(a0)
+	li	t0, 0x002a002a
+	sw	t0, GP0(a0)
+
+	; green square
+	li	t0, 0x6000ff00
+	sw	t0, GP0(a0)
+	li	t0, 0x00080060
+	sw	t0, GP0(a0)
+	li	t0, 0x002a002a
+	sw	t0, GP0(a0)
+
+	; blue square
+	li	t0, 0x60ff0000
+	sw	t0, GP0(a0)
+	li	t0, 0x000800a0
+	sw	t0, GP0(a0)
+	li	t0, 0x002a002a
+	sw	t0, GP0(a0)
 
 end:
 	j end
