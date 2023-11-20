@@ -89,28 +89,60 @@ midboot:
 	li	t0, 0xe5000000
 	sw	t0, GP0(a0)
 
-	; red square
-	li	t0, 0x600000ff
+	; grey
+	li	t0, 0x604b4b4b
 	sw	t0, GP0(a0)
-	li	t0, 0x00080020
+	li	t0, 0x00000000
 	sw	t0, GP0(a0)
-	li	t0, 0x002a002a
+	li	t0, 0x00f0002e
 	sw	t0, GP0(a0)
 
-	; green square
+	; yellow
+	li	t0, 0x6000ffff
+	sw	t0, GP0(a0)
+	li	t0, 0x0000002e
+	sw	t0, GP0(a0)
+	li	t0, 0x00f0002e
+	sw	t0, GP0(a0)
+
+	; cyan
+	li	t0, 0x60ffff00
+	sw	t0, GP0(a0)
+	li	t0, 0x0000005c
+	sw	t0, GP0(a0)
+	li	t0, 0x00f0002e
+	sw	t0, GP0(a0)
+
+	; green
 	li	t0, 0x6000ff00
 	sw	t0, GP0(a0)
-	li	t0, 0x00080060
+	li	t0, 0x0000008a
 	sw	t0, GP0(a0)
-	li	t0, 0x002a002a
+	li	t0, 0x00f0002e
 	sw	t0, GP0(a0)
 
-	; blue square
+	; magenta
+	li	t0, 0x60ff00ff
+	sw	t0, GP0(a0)
+	li	t0, 0x000000b8
+	sw	t0, GP0(a0)
+	li	t0, 0x00f0002e
+	sw	t0, GP0(a0)
+
+	; red
+	li	t0, 0x600000ff
+	sw	t0, GP0(a0)
+	li	t0, 0x000000e6
+	sw	t0, GP0(a0)
+	li	t0, 0x00f0002e
+	sw	t0, GP0(a0)
+
+	; blue
 	li	t0, 0x60ff0000
 	sw	t0, GP0(a0)
-	li	t0, 0x000800a0
+	li	t0, 0x00000114
 	sw	t0, GP0(a0)
-	li	t0, 0x002a002a
+	li	t0, 0x00f0002e
 	sw	t0, GP0(a0)
 
 	; wait a bit

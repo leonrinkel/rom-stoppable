@@ -1,2 +1,4 @@
 stoppable.rom
 *.swp
+.DS_Store
+/template/build
