@@ -113,6 +113,39 @@ midboot:
 	li	t0, 0x002a002a
 	sw	t0, GP0(a0)
 
+	; wait a bit
+	li	t0, 0xffffff
+delay:
+	subi	t0, 1
+	bnez	t0, delay
+	nop
+
+	; load executable
+	la	a0, executable
+	lw	t1, 0x18(a0)	; destinaion
+	lw	t2, 0x1c(a0)	; length
+	addiu	t3, a0, 0x800	; source, header is 800h bytes
+copy_loop:
+	lb	t4, 0x0(t3)
+	nop
+	addiu	t3, t3, 1
+	sb	t4, 0x0(t1)
+	nop
+	addiu	t1, t1, 1
+	subi	t2, 1
+	bnez	t2, copy_loop
+	nop
+
+	lw	t1, 0x10(a0)	; initial pc
+	lw	t2, 0x30(a0)	; sp base
+	lw	t3, 0x34(a0)	; sp offset
+	lw	gp, 0x14(a0)	; initial gp
+	add	sp, t2, t3
+	li	sp, 0x801FFFF0
+
+	jr t1
+	nop
+
 end:
 	j end
 	nop
@@ -128,5 +161,10 @@ puts:
 	addiu	t1, r0, 0x3e
 
 message: .ascii "call me, beep me!"
+
+	.align 4
+executable:
+	.incbin "template/build/template.exe"
+	.align 4
 
 .close
